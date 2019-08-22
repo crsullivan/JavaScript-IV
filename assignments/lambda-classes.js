@@ -24,7 +24,16 @@ const fred = new Instructor({
 // * Person receives `speak` as a method.
 // * This method logs out a phrase `Hello my name is Fred, I am from Bedrock` where `name` and `location` are the object's own props
 ​
-​
+​class Person {
+    constructor(atts){
+        this.newName = atts.name;
+        this.newAge = atts.age;
+        this.newLocation = atts.location;
+    }
+    speak(){
+        return `Hello my name is ${this.newName}, I am from ${this.newLocation}.` 
+    }
+}
 ​
 // * Instructor has the following unique props:
 //   * `specialty` what the Instructor is good at i.e. 'redux'
@@ -34,7 +43,21 @@ const fred = new Instructor({
 //   * `demo` receives a `subject` string as an argument and logs out the phrase 'Today we are learning about {subject}' where subject is the param passed in.
 //   * `grade` receives a `student` object and a `subject` string as arguments and logs out '{student.name} receives a perfect score on {subject}'
 ​
-​
+class Instructor extends Person{
+    constructor(instructorAtts){
+        super(instructorAtts);
+        this.newSpecialty = instructorAtts.specialty;
+        this.newFavLanguage = instructorAtts.favLanguage;
+        this.newCatchPhrase = instructorAtts.catchPhrase;
+    }
+   demo(subject){
+    return `Today we are learning about ${subject}.`
+   } 
+   grade([student], 'subject'){
+    return `${student.name} receives a perfect score on ${subject}.`
+   }
+}​
+
 // * If the student's grade is above a 70% let them graduate! 
 //   * Otherwise go back to grading their assignments to increase their score.
 ​
@@ -48,7 +71,19 @@ const fred = new Instructor({
 //   * `standUp` a method that takes in a slack channel and logs `{name} announces to {channel}, @channel standy times!
 //   * `debugsCode` a method that takes in a student object and a subject and logs out `{name} debugs {student.name}'s code on {subject}`
 ​
-​
+​class ProjectManager extends Instructor{
+    constructor(pmAtts){
+        super(pmAtts);
+        this.newGradClassName = pmAtts.gradClassName;
+        this.newFavInstructor = pmAtts.favInstructor;
+    }
+    standUp(channel){
+        return `${this.name} announces to ${channel}, @${channel} standy times!`
+    }
+    debugsCode([student], 'subject'){
+        return `${this.name} debugs ${student.name}'s code on ${subject}`
+    }
+}
 ​
 // * Student has the following unique props:
 //   * `previousBackground` i.e. what the Student used to do before Lambda School
@@ -59,6 +94,23 @@ const fred = new Instructor({
 //   * `PRAssignment` a method that receives a subject as an argument and logs out that the `student.name has submitted a PR for {subject}`
 //   * `sprintChallenge` similar to PRAssignment but logs out `student.name has begun sprint challenge on {subject}`
 ​
+class Student extends Person{
+    constructor(stdntAtts){
+        this.newPreviousBackground = stdntAtts.previousBackground;
+        this.newClassName = stdntAtts.className;
+        this.newFavSubjects = stdntAtts.favSubjects;
+    }
+    listsSubjects(){
+        return this.favSubjects;
+    }
+    prAssignment(subject){
+        return `${this.name} has submitted a PR for ${subject}.`
+    }
+    sprintChallenge(subject){
+        return `${this.name} has begun sprint challenge on ${subject}.`
+    }
+}
+
 /*
 Stretch Problem
 * Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
